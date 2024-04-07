@@ -1,5 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:al_quran_al_karim/src/quran/domain/juz.dart';
+import 'package:al_quran_al_karim/src/quran/domain/entities/juz.dart';
 
 class Surah {
   final String place;
