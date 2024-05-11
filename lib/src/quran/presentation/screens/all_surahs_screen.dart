@@ -1,4 +1,5 @@
 import 'package:al_quran_al_karim/src/quran/presentation/cubit/surah_cubit.dart';
+import 'package:al_quran_al_karim/src/quran/presentation/screens/surah_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -16,7 +17,17 @@ class AllSurahsScreen extends StatelessWidget {
               children: List.generate(state.surahs!.length, (index) {
                 final surah = state.surahs![index];
                 return GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    // Change the Surah state: selectedSurah
+                    context
+                        .read<SurahCubit>()
+                        .changeSelecdPage(page: int.parse(surah.page) - 1);
+                    // Navigate to the Surah Screen
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const SurahScreen()));
+                  },
                   child: SizedBox(
                     height: 65,
                     child: Row(

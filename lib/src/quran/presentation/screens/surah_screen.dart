@@ -1,15 +1,46 @@
 import 'package:al_quran_al_karim/core/services/quran_pages.dart';
 import 'package:al_quran_al_karim/src/quran/presentation/cubit/surah_cubit.dart';
 import 'package:al_quran_al_karim/src/quran/presentation/screens/all_surahs_screen.dart';
-import 'package:al_quran_al_karim/src/quran/presentation/widgets/surah_list_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class SurahScreen extends StatelessWidget {
+class SurahScreen extends StatefulWidget {
   const SurahScreen({super.key});
 
   @override
+  State<SurahScreen> createState() => _SurahScreenState();
+}
+
+class _SurahScreenState extends State<SurahScreen> {
+  late PageController pageController;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    pageController = PageController(initialPage: 0);
+  }
+
+  void _scrollToPage(index, width) {
+    // Animate to the selected Surah
+    // pageController.animateToPage(
+    //   index,
+    //   duration:
+    //       const Duration(seconds: 1), // Adjust animation duration as needed
+    //   curve: Curves.linear, // Adjust animation curve as needed
+    // );
+
+    // Animate to the selected Surah in a smooth way
+    // pageController.animateTo(index * width,
+    //     duration: const Duration(seconds: 1), curve: Curves.easeInOut);
+
+    // Jump directly to the selected Surah
+    pageController.jumpToPage(index);
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final media = MediaQuery.of(context).size;
     void showModelBottomSheet() {
       showModalBottomSheet(
           context: context,
@@ -70,9 +101,14 @@ class SurahScreen extends StatelessWidget {
       body: SafeArea(
         child: BlocBuilder<SurahCubit, SurahState>(
           builder: (context, state) {
+            debugPrint('SurahScreen state selectedPag: ${state.selectedPage}');
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              _scrollToPage(state.selectedPage, media.width);
+            });
             return GestureDetector(
               onTap: showModelBottomSheet,
               child: PageView.builder(
+                controller: pageController,
                 reverse: true,
                 itemCount: QuranPages.quranPages.length,
                 itemBuilder: (context, index) {

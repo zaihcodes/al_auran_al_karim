@@ -20,4 +20,8 @@ class SurahCubit extends Cubit<SurahState> {
 
     emit(state.copyWith(status: SurahStateStatus.loaded, surahs: surahs));
   }
+
+  void changeSelecdPage({required int page}) {
+    emit(state.copyWith(status: SurahStateStatus.loaded, selectedPage: page));
+  }
 }

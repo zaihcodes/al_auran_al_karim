@@ -18,7 +18,7 @@ class SurahState {
       int? selectedPage}) {
     return SurahState(
       status: status,
-      surahs: surahs,
+      surahs: surahs ?? this.surahs,
       selectedPage: selectedPage ?? this.selectedPage,
     );
   }
