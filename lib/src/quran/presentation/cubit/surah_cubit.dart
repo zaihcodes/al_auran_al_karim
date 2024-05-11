@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:al_quran_al_karim/src/quran/data/models/surah_model.dart';
 import 'package:al_quran_al_karim/src/quran/domain/entities/surah.dart';
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 part 'surah_state.dart';
@@ -23,5 +24,10 @@ class SurahCubit extends Cubit<SurahState> {
 
   void changeSelecdPage({required int page}) {
     emit(state.copyWith(status: SurahStateStatus.loaded, selectedPage: page));
+  }
+
+  void bookmarkePage({required int page}) {
+    debugPrint('bookmarkePage page: $page');
+    emit(state.copyWith(status: SurahStateStatus.loaded, bookmarked: page));
   }
 }
