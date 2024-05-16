@@ -33,16 +33,13 @@ class _SurahScreenState extends State<SurahScreen> {
       body: SafeArea(
         child: BlocBuilder<SurahCubit, SurahState>(
           builder: (context, state) {
-            debugPrint('SurahScreen state selectedPag: ${state.selectedPage}');
-            debugPrint(
-                'state.bookmarked == state.selectedPage: ${state.bookmarked} == ${state.selectedPage}');
-
             WidgetsBinding.instance.addPostFrameCallback((_) {
               _scrollToPage(state.selectedPage);
             });
             return GestureDetector(
               onTap: () => showModelBottomSheet(
-                  currentPage: pageController.page!.toInt()),
+                  currentPage: pageController.page!.toInt(),
+                  bookmarked: state.bookmarked),
               child: PageView.builder(
                 onPageChanged: (value) {
                   context.read<SurahCubit>().changeSelecdPage(page: value);
@@ -87,6 +84,7 @@ class _SurahScreenState extends State<SurahScreen> {
 
   void showModelBottomSheet({
     required int currentPage,
+    int? bookmarked,
   }) {
     showModalBottomSheet(
         context: context,
@@ -152,6 +150,7 @@ class _SurahScreenState extends State<SurahScreen> {
                       child: _buildBottomSheetButton(
                         context: context,
                         func: () {
+                          debugPrint('Bookmarke page $currentPage');
                           context
                               .read<SurahCubit>()
                               .bookmarkePage(page: currentPage);
@@ -165,11 +164,14 @@ class _SurahScreenState extends State<SurahScreen> {
                     ),
                     _buildBottomSheetButton(
                       context: context,
-                      func: () {
-                        // context
-                        // .read<SurahCubit>()
-                        // .changeSelecdPage(page:0);
-                      },
+                      func: bookmarked != null
+                          ? () {
+                              debugPrint('Go to bookmarked oage');
+                              context
+                                  .read<SurahCubit>()
+                                  .changeSelecdPage(page: bookmarked);
+                            }
+                          : () {},
                       icon: Icons.bookmark,
                       text: 'انتقال الى العلامة',
                     )
