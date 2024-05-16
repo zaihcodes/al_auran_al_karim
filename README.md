@@ -1,3 +1,10 @@
 # al_quran_al_karim
 
-A new Flutter project.
+# القرآن الكريم
+
+
+
+# Screenshots:
+
+![my screenshot](./screenshots/Screenshot_6.png)
+![my screenshot](./screenshots/Screenshot_7.png)
